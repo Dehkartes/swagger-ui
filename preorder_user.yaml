@@ -1,0 +1,318 @@
+---
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  "/verification":
+    post:
+      tags:
+      - verification-controller
+      operationId: verification
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  "/verification/tryVerification":
+    post:
+      tags:
+      - verification-controller
+      operationId: tryVerification
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: userInput
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  "/member/verified":
+    post:
+      tags:
+      - user-controller
+      operationId: verifyMember
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+  "/member/update":
+    post:
+      tags:
+      - user-controller
+      operationId: updateMember
+      parameters:
+      - name: payload
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        '200':
+          description: OK
+  "/member/find":
+    post:
+      tags:
+      - user-controller
+      operationId: findMember
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/User"
+  "/member/create":
+    post:
+      tags:
+      - user-controller
+      operationId: createMember
+      parameters:
+      - name: payload
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        '200':
+          description: OK
+  "/jwt-login/login":
+    post:
+      tags:
+      - jwt-login-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/jwt-login/join":
+    get:
+      tags:
+      - jwt-login-controller
+      operationId: joinPage
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+    post:
+      tags:
+      - jwt-login-controller
+      operationId: join
+      parameters:
+      - name: signUpDTO
+        in: query
+        required: true
+        schema:
+          "$ref": "#/components/schemas/SignUpDTO"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/email/sendAuth":
+    post:
+      tags:
+      - email-controller
+      operationId: mailCheck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/member/test":
+    get:
+      tags:
+      - user-controller
+      operationId: test
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/jwt-login/info":
+    get:
+      tags:
+      - jwt-login-controller
+      operationId: memberInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/jwt-login/admin":
+    get:
+      tags:
+      - jwt-login-controller
+      operationId: adminPage
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/jwt-login":
+    get:
+      tags:
+      - jwt-login-controller
+      operationId: home
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/jwt-login/":
+    get:
+      tags:
+      - jwt-login-controller
+      operationId: home_1
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/errorful/case3":
+    get:
+      tags:
+      - errorful-controller
+      operationId: case3
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/errorful/case2":
+    get:
+      tags:
+      - errorful-controller
+      operationId: case2
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/errorful/case1":
+    get:
+      tags:
+      - errorful-controller
+      operationId: case1
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+        verified:
+          type: boolean
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        loginId:
+          type: string
+        password:
+          type: string
+    SignUpDTO:
+      required:
+      - address
+      - email
+      - loginId
+      - name
+      - password
+      type: object
+      properties:
+        loginId:
+          type: string
+        password:
+          type: string
+        passwordCheck:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
